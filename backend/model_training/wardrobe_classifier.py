@@ -1,5 +1,7 @@
 from fastai.vision.all import *
 
+# TODO: Update to use images stored in the database :))
+
 path = Path('wardrobe')
 
 # Print list of every image file found inside the wardrobe folder
@@ -32,5 +34,6 @@ dls = DataBlock(
 # show pictures with correct clothing items below to show everything loaded ok
 dls.show_batch(max_n=6)
 
-
-# once accurate, I could build a drag and drop system which says what's in the picture...
+learn = vision_learner(dls, resnet34, metrics=error_rate)
+learn.fine_tune(5)          # train for 5 epochs
+learn.export('wardrobe_model.pkl')   # saves the trained model to disk
