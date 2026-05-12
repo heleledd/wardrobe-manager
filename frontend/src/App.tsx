@@ -16,19 +16,27 @@ export default function App() {
 
 	// what happens once the user takes a picture
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-	const file = event.target.files?.[0];
-	if (file) {
-		const reader = new FileReader();
-		reader.onloadend = () => {
-		const base64 = reader.result as string;
-		setPhotoUrl(base64);
-		localStorage.setItem('wardrobePhoto', base64); // persist it
-		// Reset form state when a new photo is taken
-        setIsNewItem(null);
-        setItemName('');
-		};
-		reader.readAsDataURL(file);
-	}
+		const file = event.target.files?.[0];
+		if (file) {
+			const reader = new FileReader();
+			reader.onloadend = () => {
+			const base64 = reader.result as string;
+			setPhotoUrl(base64);
+			localStorage.setItem('wardrobePhoto', base64); // persist it
+			// Reset form state when a new photo is taken
+			setIsNewItem(null);
+			setItemName('');
+			};
+			reader.readAsDataURL(file);
+		}
+	};
+
+	// clears the preview and goes back to the base page
+	const handleReset = () => {
+		setPhotoUrl(null);
+		setIsNewItem(null);
+		setItemName('');
+		localStorage.removeItem('wardrobePhoto');
 	};
 
 	// send the image to the FastAPI backend...
@@ -102,7 +110,7 @@ export default function App() {
 									type="text"
 									value={itemName}
 									onChange={(e) => setItemName(e.target.value)}
-									placeholder="e.g. Blue denim jacket"
+									placeholder="e.g. blue-denim-jacket"
 									style={{ marginLeft: '8px' }}
 								/>
 							</div>
@@ -115,19 +123,8 @@ export default function App() {
 						>
 							{isSubmitting ? 'Submitting...' : 'Submit'}
 						</button>
+						<button type="button" onClick={handleReset}>Cancel</button>
 					</div>
-				)}
-
-				{/* Submit the form once the yes/no question is answered */}
-				{isNewItem !== null && (
-					<button
-					type="button"
-					onClick={handleSubmit}
-					disabled={isSubmitting || (isNewItem && !itemName.trim())}
-					style={{ marginTop: '16px', display: 'block', margin: '16px auto 0' }}
-					>
-					{isSubmitting ? 'Uploading...' : 'Save to Wardrobe'}
-					</button>
 				)}
 			</div>
 			)}
