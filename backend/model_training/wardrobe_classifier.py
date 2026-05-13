@@ -1,6 +1,6 @@
 from fastai.vision.all import *
 
-# TODO: Update to use images stored in the database :))
+# TODO: Update to use images stored in the database :)) so that there's one single source of truth
 
 path = Path('wardrobe')
 
