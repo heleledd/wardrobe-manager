@@ -6,7 +6,8 @@ export default defineConfig({
   server: {
     allowedHosts: ['snipping-scrubber-register.ngrok-free.dev'],
     proxy: {
-      '/upload': 'http://localhost:8000',  // forwards /add/new and /add/existing to FastAPI
+      '/upload': 'http://localhost:8000',
+      '/items': 'http://localhost:8000',
     }
   }
 })

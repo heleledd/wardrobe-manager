@@ -1,3 +1,4 @@
+# cd backend/app
 # uvicorn main:app --reload
 
 from typing import Annotated
@@ -59,13 +60,30 @@ def compress_image(base64_str: str, max_size=(512, 512)) -> bytes:
 class ItemRequest(BaseModel):
     image: str   # base64
     name: str | None = None  # only required for new items
+    item_id: int | None = None
+
+# list all item names + IDs for the frontend dropdown
+@app.get("/items")
+def list_items(session: SessionDep):
+    items = session.exec(select(WardrobeItem.id, WardrobeItem.name)).all()
+    return [{"id": item.id, "name": item.name} for item in items]
 
 @app.post("/upload")
-def add_new_item(request: ItemRequest, session: SessionDep):
-    if not request.name:
-        raise HTTPException(status_code=400, detail="Name is required for new items")
+def upload_item(request: ItemRequest, session: SessionDep):
     compressed = compress_image(request.image)
-    item = WardrobeItem(name=request.name, image=compressed)
+
+    if request.item_id is not None:
+        # Adding a new image entry linked to an existing item's name
+        existing = session.get(WardrobeItem, request.item_id)
+        if not existing:
+            raise HTTPException(status_code=404, detail="Item not found")
+        item = WardrobeItem(name=existing.name, image=compressed)
+    elif request.name:
+        # Brand new item
+        item = WardrobeItem(name=request.name, image=compressed)
+    else:
+        raise HTTPException(status_code=400, detail="Provide either item_id or name")
+
     session.add(item)
     session.commit()
     session.refresh(item)
