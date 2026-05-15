@@ -7,7 +7,7 @@ My goal is to create an app that can recognise which item of clothing from my wa
 - I can upload and label pictures to the database via a web app
 - Using an AI model to separate all clothing items in an image - this works very well for pictures downloaded from clothes websites, but not for pictures taken in real life in my bedroom mirror
 
-![Web App Screenshot](localhost_5172.png)
+![Web App Screenshot](localhost_5173.png)
 ![Semantic Segmentation on Online Shopping Image](comparison_shop_photo.jpg)
 ![Semantic Segmentation on Image from my Bedroom Mirror](comparison_bedroom_mirror.jpg)
 
