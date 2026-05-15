@@ -7,9 +7,9 @@ My goal is to create an app that can recognise which item of clothing from my wa
 - I can upload and label pictures to the database via a web app
 - Using an AI model to separate all clothing items in an image - this works very well for pictures downloaded from clothes websites, but not for pictures taken in real life in my bedroom mirror
 
-!()[localhost_5173.png]
-!()[comparison_bedroom_mirror.jpg]
-!()[comparison_shop_photo.jpg]
+![Web App Screenshot](localhost_5172.png)
+![Semantic Segmentation on Online Shopping Image](comparison_shop_photo.jpg)
+![Semantic Segmentation on Image from my Bedroom Mirror](comparison_bedroom_mirror.jpg)
 
 ## Next Steps
 - Next step is to find what can boost accuracy of semantic segmentation in pictures with a lot of noise - such as ones in my bedroom mirror rather than a professional studio

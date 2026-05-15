@@ -3,13 +3,16 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import torch.nn as nn
 
+# do the weights need to be loaded every time??
+
+# works well for images with a high contrast background
 processor = SegformerImageProcessor.from_pretrained("mattmdjaga/segformer_b2_clothes")
 model = AutoModelForSemanticSegmentation.from_pretrained("mattmdjaga/segformer_b2_clothes")
 
 # change this later to whatever the user has uploaded
 
 
-image_path = "C:/dev/personal-learning/wardrobe_manager/backend/app/trousers.jpg"
+image_path = "C:/dev/personal-learning/wardrobe_manager/backend/app/standing_on_bed.jpg"
 
 image = Image.open(image_path)
 inputs = processor(images=image, return_tensors="pt")
